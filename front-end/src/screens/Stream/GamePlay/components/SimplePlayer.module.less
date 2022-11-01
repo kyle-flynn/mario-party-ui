@@ -1,0 +1,36 @@
+@text-color: #ffffff;
+
+.playerContainer {
+  color: @text-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 15vw;
+
+  .playerAvatar {
+    background-color: turquoise;
+    min-width: 5vw;
+    width: 5vw;
+    height: 5vw;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid @text-color;
+    z-index: 999;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .playerStats {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 2vw;
+    border-radius: 40px;
+    width: 100%;
+    text-align: right;
+    margin-left: -2vw;
+    padding: 8px 32px 8px 0;
+    font-weight: bold;
+  }
+}
