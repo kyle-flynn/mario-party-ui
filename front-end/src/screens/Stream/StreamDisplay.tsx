@@ -18,11 +18,11 @@ export const StreamDisplay: FC = () => {
 
 function getDisplay(id: number): ReactNode {
   switch (id) {
-    case 2:
+    case 0:
       return <GameOverview />;
     case 1:
       return <GamePlay />;
-    case 0:
+    case 2:
       return <GamePlayResults />;
     default:
       return <GameOverview />;
