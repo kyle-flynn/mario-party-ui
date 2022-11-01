@@ -1,0 +1,30 @@
+@text-color: #ffffff;
+
+.playerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40vw;
+    height: 10vh;
+    gap: 8px;
+    font-size: 2vw;
+
+    .playerResult {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        border-bottom: 2px solid @text-color;
+
+        img {
+            width: 4vw;
+            height: 4vw;
+        }
+    }
+    .playerName {
+        width: 100%;
+        text-align: left;
+    }
+}
