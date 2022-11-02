@@ -21,8 +21,6 @@ function getDisplay(id: number): ReactNode {
     case 0:
       return <GameOverview />;
     case 1:
-      return <GamePlay />;
-    case 2:
       return <GamePlayResults />;
     default:
       return <GameOverview />;

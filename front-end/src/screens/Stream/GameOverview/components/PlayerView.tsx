@@ -3,8 +3,13 @@ import classes from "./PlayerView.module.less";
 import MARIO_AVATAR from "../../../../assets/mario-avatar.png";
 import COIN_ICON from "../../../../assets/coin-icon.png";
 import STAR_ICON from "../../../../assets/star-icon.png";
+import { Player } from "../../../../AppTypes";
 
-const PlayerView: FC = () => {
+interface Props {
+  player: Player;
+}
+
+const PlayerView: FC<Props> = ({ player }) => {
   return (
     <div className={classes.player}>
       <div className={classes.playerInfo}>
@@ -12,22 +17,22 @@ const PlayerView: FC = () => {
           <div className={classes.playerAvatarContainer}>
             <img src={MARIO_AVATAR} />
           </div>
-          <div className={classes.playerRank}>1st</div>
+          <div className={classes.playerRank}>{player.rank}</div>
         </div>
         <div className={classes.playerStats}>
           <div className={classes.statRow}>
-            <span>
+            <div className="center">
               <img src={COIN_ICON} />
-            </span>
+            </div>
             <span className={classes.stars}>
-              <b>0</b>
+              <b>{player.stars}</b>
             </span>
           </div>
           <div className={classes.statRow}>
-            <span>
+            <div className="center">
               <img src={STAR_ICON} />
-            </span>
-            <span>0</span>
+            </div>
+            <span>{player.coins}</span>
           </div>
         </div>
       </div>
