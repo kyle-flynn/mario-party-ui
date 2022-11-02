@@ -1,7 +1,7 @@
 import express, { Application, json, urlencoded } from "express";
-import { createServer } from 'http';
+import { createServer } from "http";
 import { Server } from "socket.io";
-import cors from 'cors';
+import cors from "cors";
 
 const app: Application = express();
 const server = createServer(app);
@@ -12,16 +12,22 @@ app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-io.on('connection', (socket) => {
-    console.log('user connected');
+io.on("connection", (socket) => {
+  console.log("user connected");
 
-    socket.on("disconnect", (reason: string) => {
-        console.log('user disconnected: ' + reason);
-    });
+  socket.on("update", (update) => {
+    socket.emit("update", update);
+  });
 
-    socket.on("error", (err) => {
-        console.log('user error: ' + err);
-    });
-})
+  socket.on("disconnect", (reason: string) => {
+    console.log("user disconnected: " + reason);
+  });
 
-server.listen({ host: '127.0.0.1', port: '8080' }, () => console.log('started server'));
+  socket.on("error", (err) => {
+    console.log("user error: " + err);
+  });
+});
+
+server.listen({ host: "127.0.0.1", port: "8080" }, () =>
+  console.log("started server")
+);

@@ -39,6 +39,7 @@ const DEFAULT_GAME: Game = {
     },
   ],
 };
+const DEFAULT_SOCKET_CONNECTED = false;
 
 export const chromaKeyAtom = atom<string>({
   key: "chromaKeyAtom",
@@ -53,4 +54,8 @@ export const currentDisplayId = atom<number>({
 export const currentGameAtom = atom<Game>({
   key: "currentGameAtom",
   default: DEFAULT_GAME,
+});
+export const sockedConnectedAtom = atom<boolean>({
+  key: "socketConnectedAtom",
+  default: DEFAULT_SOCKET_CONNECTED,
 });
