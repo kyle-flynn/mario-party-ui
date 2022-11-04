@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { Game } from "../AppTypes";
 
-const DEFAULT_CHROMA_KEY = "#00ff00";
+const DEFAULT_CHROMA_KEY = "#e4e4e4";
 const DEFUALT_DISPLAY_ID = 0;
 const DEFAULT_GAME: Game = {
   players: [

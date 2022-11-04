@@ -16,7 +16,15 @@ io.on("connection", (socket) => {
   console.log("user connected");
 
   socket.on("update", (update) => {
-    socket.emit("update", update);
+    socket.broadcast.emit("update", update);
+  });
+
+  socket.on("display", (display) => {
+    socket.broadcast.emit("display", display);
+  });
+
+  socket.on("chroma", (chroma) => {
+    socket.broadcast.emit("chroma", chroma);
   });
 
   socket.on("disconnect", (reason: string) => {

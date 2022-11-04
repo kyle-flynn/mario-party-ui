@@ -5,6 +5,7 @@ import { Player } from "../../../../AppTypes";
 import MARIO_AVATAR from "../../../../assets/mario-avatar.png";
 import COIN_ICON from "../../../../assets/coin-icon.png";
 import STAR_ICON from "../../../../assets/star-icon.png";
+import BACKGROUND from "../../../../assets/player-backdrop.png";
 
 interface Props {
   player: Player;
@@ -12,7 +13,10 @@ interface Props {
 
 const PlayerResult: FC<Props> = ({ player }) => {
   return (
-    <div className={classes.playerContainer}>
+    <div
+      style={{ backgroundImage: `url(${BACKGROUND})` }}
+      className={classes.playerContainer}
+    >
       <div className={classes.playerResult}>
         <div className={classes.playerRank}>{player.rank}</div>
         <div className={classes.playerAvatar}>

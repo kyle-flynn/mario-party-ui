@@ -2,3 +2,8 @@
   font-family: "MarioParty";
   src: url("../fonts/Mario-Party-Hudson-Font.ttf");
 }
+
+@font-face {
+  font-family: "CantedFX";
+  src: url("../fonts/CantedFX\ Bold.otf");
+}

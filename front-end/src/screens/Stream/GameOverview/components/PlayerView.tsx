@@ -7,32 +7,50 @@ import { Player } from "../../../../AppTypes";
 
 interface Props {
   player: Player;
+  avatarClass?: string;
 }
 
-const PlayerView: FC<Props> = ({ player }) => {
+const PlayerView: FC<Props> = ({ player, avatarClass }) => {
+  const getRankText = () => {
+    switch (player.rank) {
+      case 1:
+        return "1st";
+      case 2:
+        return "2nd";
+      case 3:
+        return "3rd";
+      case 4:
+        return "4th";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className={classes.player}>
       <div className={classes.playerInfo}>
         <div className={classes.playerAvatar}>
-          <div className={classes.playerAvatarContainer}>
-            <img src={MARIO_AVATAR} />
+          <div className={`${avatarClass} ${classes.playerAvatarContainer}`}>
+            {/* <img src={MARIO_AVATAR} /> */}
           </div>
-          <div className={classes.playerRank}>{player.rank}</div>
+          <div className={classes.playerRank}>{getRankText()}</div>
         </div>
         <div className={classes.playerStats}>
           <div className={classes.statRow}>
             <div className="center">
-              <img src={COIN_ICON} />
+              <img src={STAR_ICON} />
             </div>
-            <span className={classes.stars}>
+            <div className={`center ${classes.stars}`}>
               <b>{player.stars}</b>
-            </span>
+            </div>
           </div>
           <div className={classes.statRow}>
             <div className="center">
-              <img src={STAR_ICON} />
+              <img src={COIN_ICON} />
             </div>
-            <span>{player.coins}</span>
+            <div className="center">
+              <span>{player.coins}</span>
+            </div>
           </div>
         </div>
       </div>
