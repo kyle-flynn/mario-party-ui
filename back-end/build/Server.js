@@ -2,6 +2,8 @@ import express, { json, urlencoded } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
@@ -38,4 +40,6 @@ io.on("connection", (socket) => {
         console.log("user error: " + err);
     });
 });
-server.listen({ host: "127.0.0.1", port: "8080" }, () => console.log("started server"));
+const host = process.env.HOST_API || '127.0.0.1';
+const port = process.env.HOST_PORT || '8080';
+server.listen({ host, port }, () => console.log(`started server on ${host}:${port}`));
