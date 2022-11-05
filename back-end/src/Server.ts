@@ -3,6 +3,8 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
+import { readFile } from 'fs/promises';
+import https from 'https';
 
 dotenv.config();
 
@@ -52,9 +54,30 @@ io.on("connection", (socket) => {
   });
 });
 
-const host = process.env.HOST_API || '127.0.0.1';
+const host = process.env.HOST_IP || '127.0.0.1';
 const port = process.env.HOST_PORT || '8080';
+const mode = process.env.NODE_ENV || 'development';
+const sslPort = process.env.SSL_PORT || '443';
 
 server.listen({ host, port }, () =>
   console.log(`started server on ${host}:${port}`)
 );
+
+/* If in production, enable HTTPS */
+if (mode === 'production') {
+  const keyFile = process.env.SSL_KEY || '';
+  const certFile = process.env.SSL_CERT || '';
+  const caFile = process.env.SSL_CHAIN || '';
+
+  // All SSL env variables must be absolute pathing
+  const key = await readFile(keyFile);
+  const cert = await readFile(certFile);
+  const ca = await readFile(caFile);
+
+  const appHttps = https.createServer({ key, cert, ca }, app);
+  appHttps.listen(sslPort, () =>
+    console.log(
+      `[HTTPS] serving at ${host}:${sslPort} in ${mode} mode.`
+    )
+  );
+}
