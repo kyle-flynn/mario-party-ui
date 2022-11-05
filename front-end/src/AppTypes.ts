@@ -9,6 +9,7 @@ export interface Player {
   rank: number;
   coins: number;
   newCoins: number;
+  avatarUrl?: string;
   items: Item[];
 }
 

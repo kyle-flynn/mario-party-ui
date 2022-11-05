@@ -38,14 +38,18 @@ export const AdminPanel: FC = () => {
         <div className={classes.adminForms}>
           <form>
             <h1>Display Settings</h1>
-            <label htmlFor="chroma">Chroma Key</label>
-            <input id="chroma" type="text" value={chromaKey} onChange={changeChromaKey} />
+            <div className={classes.formgroup}>
+              <label htmlFor="chroma">Chroma Key</label>
+              <input id="chroma" type="text" value={chromaKey} onChange={changeChromaKey} />
+            </div>
             <button onClick={sendChromaKey}>Update</button>
           </form>
           <form>
             <h1>Display Screens</h1>
-            <button onClick={setToOverview}>Game Overview</button>
-            <button onClick={setToRankings}>Game Rankings</button>
+            <div className={classes.formgroup}>
+              <button onClick={setToOverview}>Game Overview</button>
+              <button onClick={setToRankings}>Game Rankings</button>
+            </div>
           </form>
         </div>
         <div className={classes.adminForms}>

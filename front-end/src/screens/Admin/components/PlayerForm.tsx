@@ -35,6 +35,9 @@ export const PlayerForm: FC<Props> = ({ playerId, onUpdate }) => {
   return (
     <form>
       <h1>Player {player.id} Stats</h1>
+      <div className={classes.playerImage}>
+        <img src={player.avatarUrl} />
+      </div>
       <div className={classes.formgroup}>
         <label htmlFor="stars"><img src={STARS_ICON} /><span>Stars</span></label>
         <input name="stars" id="stars" type="number" value={player.stars} onChange={handleChange} />
@@ -50,6 +53,10 @@ export const PlayerForm: FC<Props> = ({ playerId, onUpdate }) => {
       <div className={classes.formgroup}>
         <label htmlFor="name">Name</label>
         <input name="name" id="name" type="text" value={player.name} onChange={handleChange} />
+      </div>
+      <div className={classes.formgroup}>
+        <label htmlFor="avatarUrl">Avatar URL</label>
+        <input name="avatarUrl" id="avatarUrl" type="text" value={player.avatarUrl} onChange={handleChange} />
       </div>
       <button type="submit" onClick={handleUpdate}>Update</button>
     </form>
