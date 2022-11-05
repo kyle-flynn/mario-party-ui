@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, MouseEvent } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilState } from "recoil";
 import { useSocket } from "../../providers/ApiProvier";
 import { chromaKeyAtom, currentGameAtom } from "../../stores/Recoil";
 import classes from "./AdminPanel.module.less";
@@ -7,16 +7,16 @@ import { PlayerForm } from "./components/PlayerForm";
 
 export const AdminPanel: FC = () => {
   const [chromaKey, setChromaKey] = useRecoilState(chromaKeyAtom);
-  const game = useRecoilValue(currentGameAtom);
 
   const [socket] = useSocket();
 
   const changeChromaKey = (e: ChangeEvent<HTMLInputElement>) => {
     setChromaKey(e.target.value);
   };
-  const handleUpdate = () => {
-    socket?.emit("update", game);
-  };
+  const handleUpdate = useRecoilCallback(({ snapshot }) => async () => {
+    const promisedGame = await snapshot.getPromise(currentGameAtom);
+    socket?.emit("update", promisedGame);
+  });
 
   const sendChromaKey = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

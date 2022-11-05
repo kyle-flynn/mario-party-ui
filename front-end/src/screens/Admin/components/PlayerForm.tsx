@@ -21,8 +21,15 @@ export const PlayerForm: FC<Props> = ({ playerId, onUpdate }) => {
     const typedValue = type === 'number' ? parseInt(value) : value;
     setPlayer({ ...player, [name]: typedValue });
   };
+  const handleCoinChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const newCoins = parseInt(value);
+    const newPlayer = { ...player, newCoins };
+    setPlayer({ ...newPlayer });
+  };
   const handleUpdate = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setPlayer({ ...player, coins: player.coins + player.newCoins });
     onUpdate();
   };
   return (
@@ -35,6 +42,10 @@ export const PlayerForm: FC<Props> = ({ playerId, onUpdate }) => {
       <div className={classes.formgroup}>
         <label htmlFor="coins"><img src={COIN_ICON} /><span>Coins</span></label>
         <input name="coins" id="coins" type="number" value={player.coins} onChange={handleChange} />
+      </div>
+      <div className={classes.formgroup}>
+        <label htmlFor="newCoins"><span>Coins To Add</span></label>
+        <input id="newCoins" type="number" value={player.newCoins} onChange={handleCoinChange} />
       </div>
       <div className={classes.formgroup}>
         <label htmlFor="name">Name</label>

@@ -25,7 +25,7 @@ const PlayerResult: FC<Props> = ({ player }) => {
         <img src={STAR_ICON} />
       </div>
       <span className={`center ${classes.playerStars}`}>{player.stars}</span>
-      <span className={`center ${classes.playerNewCoins}`}>+5</span>
+      <span className={`center ${classes.playerNewCoins}`}>{player.newCoins}</span>
       <div className={`center ${classes.playerStat}`}>
         <img src={COIN_ICON} />
       </div>

@@ -7,7 +7,7 @@ import "./App.less";
 const App: FC = () => {
   return (
     <>
-      <UpdateListener host={window.location.hostname} port="8080" />
+      <UpdateListener host={'127.0.0.1'} port="8080" />
       <Routes>
         {AppRoutes.map((route) => (
           <Route key={route.name} path={route.path} element={route.component} />

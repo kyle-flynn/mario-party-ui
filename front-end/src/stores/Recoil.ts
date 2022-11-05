@@ -7,6 +7,7 @@ const DEFAULT_GAME: Game = {
   players: [
     {
       coins: 0,
+      newCoins: 0,
       id: 1,
       items: [],
       name: "Player 1",
@@ -15,6 +16,7 @@ const DEFAULT_GAME: Game = {
     },
     {
       coins: 0,
+      newCoins: 0,
       id: 2,
       items: [],
       name: "Player 2",
@@ -23,6 +25,7 @@ const DEFAULT_GAME: Game = {
     },
     {
       coins: 0,
+      newCoins: 0,
       id: 3,
       items: [],
       name: "Player 3",
@@ -31,6 +34,7 @@ const DEFAULT_GAME: Game = {
     },
     {
       coins: 0,
+      newCoins: 0,
       id: 4,
       items: [],
       name: "Player 4",
