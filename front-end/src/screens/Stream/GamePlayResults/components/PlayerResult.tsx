@@ -17,32 +17,19 @@ const PlayerResult: FC<Props> = ({ player }) => {
       style={{ backgroundImage: `url(${BACKGROUND})` }}
       className={classes.playerContainer}
     >
-      <div className={classes.playerResult}>
-        <div className={classes.playerRank}>{player.rank}</div>
-        <div className={classes.playerAvatar}>
-          <img src={MARIO_AVATAR} />
-        </div>
-        <div className={classes.playerStat}>
-          <div className="center">
-            <img src={STAR_ICON} />
-          </div>
-          <div className={classes.playerStars}>
-            <span>{player.stars}</span>
-          </div>
-        </div>
-        <div className={classes.playerNewCoins}>
-          <span>+5</span>
-        </div>
-        <div className={classes.playerStat}>
-          <div className="center">
-            <img src={COIN_ICON} />
-          </div>
-          <div className={classes.playerCoins}>
-            <span>{player.coins}</span>
-          </div>
-        </div>
+      <span className={`center ${classes.playerRank}`}>{player.rank}</span>
+      <div className={classes.playerImage}>
+        <img src={MARIO_AVATAR} />
       </div>
-      {/* <div className={classes.playerName}>{player.name}</div> */}
+      <div className={`center ${classes.playerStat}`}>
+        <img src={STAR_ICON} />
+      </div>
+      <span className={`center ${classes.playerStars}`}>{player.stars}</span>
+      <span className={`center ${classes.playerNewCoins}`}>+5</span>
+      <div className={`center ${classes.playerStat}`}>
+        <img src={COIN_ICON} />
+      </div>
+      <span className={`center ${classes.playerCoins}`}>{player.coins}</span>
     </div>
   );
 };

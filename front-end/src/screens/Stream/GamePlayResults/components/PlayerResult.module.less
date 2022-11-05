@@ -2,72 +2,53 @@
 
 .playerContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   width: 66vw;
   height: 13vh;
-  font-size: 3vw;
+  font-size: 4vw;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding: 0 6vw;
 
-  .playerResult {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-    padding: 0 200px;
-
+  // Hopefully this is all we'll need
+  .playerImage {
+    border-radius: 50%;
+    border: 4px solid @text-color;
+    background-color: yellow;
+    overflow: hidden;
+    width: 8vw;
+    height: 8vw;
     img {
-      width: 4vw;
-      height: 4vw;
-    }
-
-    .playerRank {
-      width: 7vw;
-    }
-
-    .playerAvatar {
-      background-color: rgb(217, 232, 245);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 4px solid @text-color;
-
-      img {
-        width: 6vw;
-        height: 6vw;
-      }
-    }
-
-      .playerNewCoins {
-        font-size: 3vw;
-        flex-grow: 0.5;
-        margin-left: 5vw;
-      }
-
-    .playerStat {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 1;
-      gap: 4vw;
+      width: 100%;
       height: 100%;
-
-      .playerStars {
-        font-size: 4vw;
-        margin-bottom: 1vh;
-      }
-
-      .playerCoins {
-        font-size: 3.5vw;
-        margin-bottom: 1vh;
-      }
     }
   }
-  .playerName {
-    width: 100%;
-    text-align: left;
+
+  .playerRank {
+    width: 3vw;
+    margin-bottom: 1vh;
   }
-}
+
+  img.playerStat {
+    width: 3.5vw;
+    height: 3.5vw;
+  }
+
+  .playerStars {
+    width: 4vw;
+    margin-right: 4vw;
+    margin-bottom: 1vh;
+  }
+  
+  .playerNewCoins {
+    font-size: 2.5vw;
+  }
+
+  .playerCoins {
+    margin-bottom: 1vh;
+  }
+
+ }
