@@ -1,4 +1,4 @@
-import { atom, selectorFamily } from "recoil";
+import { atom, DefaultValue, selectorFamily } from "recoil";
 import { Game, Player } from "../AppTypes";
 
 const DEFAULT_CHROMA_KEY = "#e4e4e4";
@@ -59,5 +59,12 @@ export const currentGameAtom = atom<Game>({
 });
 export const playerSelectorFam = selectorFamily<Player | undefined, number>({
   key: 'playerSelectorFam',
-  get: (id: number) => ({ get }) => get(currentGameAtom).players.find((p) => p.id === id)
+  get: (id: number) => ({ get }) => get(currentGameAtom).players.find((p) => p.id === id),
+  set: (id: number) => ({ get, set }, newValue) => {
+    const player = get(currentGameAtom).players.find((p) => p.id === id);
+    const players = get(currentGameAtom).players;
+    const index = players.findIndex((p) => p.id === id);
+    if (newValue instanceof DefaultValue || !newValue || !player) return;
+    set(currentGameAtom, { players: [...players.slice(0, index), newValue, ...players.slice(index + 1)] })
+  }
 });

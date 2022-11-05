@@ -1,29 +1,29 @@
 import { ChangeEvent, FC, MouseEvent } from 'react';
-import { Player } from '../../../AppTypes';
+import { useRecoilState } from 'recoil';
+import { playerSelectorFam } from '../../../stores/Recoil';
 import classes from '../AdminPanel.module.less';
 
 import STARS_ICON from '../../../assets/star-icon.png';
 import COIN_ICON from '../../../assets/coin-icon.png';
-import { useRecoilValue } from 'recoil';
-import { playerSelectorFam } from '../../../stores/Recoil';
 
 interface Props {
   playerId: number;
-  onChange: (player: Player) => void;
+  onUpdate: () => void;
 }
 
-export const PlayerForm: FC<Props> = ({ playerId, onChange }) => {
-  const player = useRecoilValue(playerSelectorFam(playerId));
+export const PlayerForm: FC<Props> = ({ playerId, onUpdate }) => {
+  const [player, setPlayer] = useRecoilState(playerSelectorFam(playerId));
 
   if (!player) return null;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name, type } = e.target;
     const typedValue = type === 'number' ? parseInt(value) : value;
-    onChange({ ...player, [name]: typedValue });
+    setPlayer({ ...player, [name]: typedValue });
   };
   const handleUpdate = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    onUpdate();
   };
   return (
     <form>

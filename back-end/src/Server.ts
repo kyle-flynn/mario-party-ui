@@ -12,19 +12,32 @@ app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
+const data: Map<string, unknown> = new Map();
+
 io.on("connection", (socket) => {
   console.log("user connected");
 
+  if (data.size > 0) {
+    console.log("sending user recorded data");
+    const channels = Array.from(data.keys());
+    for (const channel of channels) {
+      socket.emit(channel, data.get(channel));
+    }
+  }
+
   socket.on("update", (update) => {
     socket.broadcast.emit("update", update);
+    data.set("update", update);
   });
 
   socket.on("display", (display) => {
     socket.broadcast.emit("display", display);
+    data.set("display", display);
   });
 
   socket.on("chroma", (chroma) => {
     socket.broadcast.emit("chroma", chroma);
+    data.set("chroma", chroma);
   });
 
   socket.on("disconnect", (reason: string) => {

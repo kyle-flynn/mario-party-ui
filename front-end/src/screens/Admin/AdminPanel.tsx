@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, MouseEvent } from "react";
-import { useRecoilState } from "recoil";
-import { Player } from "../../AppTypes";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useSocket } from "../../providers/ApiProvier";
 import { chromaKeyAtom, currentGameAtom } from "../../stores/Recoil";
 import classes from "./AdminPanel.module.less";
@@ -8,15 +7,15 @@ import { PlayerForm } from "./components/PlayerForm";
 
 export const AdminPanel: FC = () => {
   const [chromaKey, setChromaKey] = useRecoilState(chromaKeyAtom);
-  const [game, setGame] = useRecoilState(currentGameAtom);
+  const game = useRecoilValue(currentGameAtom);
 
   const [socket] = useSocket();
 
   const changeChromaKey = (e: ChangeEvent<HTMLInputElement>) => {
     setChromaKey(e.target.value);
   };
-  const changePlayerInfo = (player: Player) => {
-
+  const handleUpdate = () => {
+    socket?.emit("update", game);
   };
 
   const sendChromaKey = (e: MouseEvent<HTMLButtonElement>) => {
@@ -50,10 +49,10 @@ export const AdminPanel: FC = () => {
           </form>
         </div>
         <div className={classes.adminForms}>
-          <PlayerForm onChange={changePlayerInfo} playerId={1} />
-          <PlayerForm onChange={changePlayerInfo} playerId={2} />
-          <PlayerForm onChange={changePlayerInfo} playerId={3} />
-          <PlayerForm onChange={changePlayerInfo} playerId={4} />
+          <PlayerForm onUpdate={handleUpdate} playerId={1} />
+          <PlayerForm onUpdate={handleUpdate} playerId={2} />
+          <PlayerForm onUpdate={handleUpdate} playerId={3} />
+          <PlayerForm onUpdate={handleUpdate} playerId={4} />
         </div>
       </div>
     </div>
