@@ -1,9 +1,9 @@
 import { atom, DefaultValue, selector, selectorFamily } from "recoil";
 import { Game, Player } from "../AppTypes";
 
-const DEFAULT_CHROMA_KEY = "#e4e4e4";
+export const DEFAULT_CHROMA_KEY = "#e4e4e4";
 const DEFUALT_DISPLAY_ID = 0;
-const DEFAULT_GAME: Game = {
+export const DEFAULT_GAME: Game = {
   players: [
     {
       coins: 0,

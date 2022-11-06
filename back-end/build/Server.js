@@ -40,8 +40,10 @@ const io = new Server(server);
 app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
+app.use(serveStatic(join(__dirname, "../dist")));
+app.use("/admin", serveStatic(join(__dirname, "../dist")));
 const data = new Map();
-io.of("/realtime").on("connection", (socket) => {
+io.on("connection", (socket) => {
     console.log("user connected");
     if (data.size > 0) {
         console.log("sending user recorded data");
@@ -69,11 +71,9 @@ io.of("/realtime").on("connection", (socket) => {
         console.log("user error: " + err);
     });
 });
-app.use(serveStatic(join(__dirname, "../dist")));
 /* If in production, enable HTTPS */
 if (mode === "production") {
-    const appHttps = await createServer(app);
-    appHttps.listen(sslPort, () => console.log(`[HTTPS] serving at ${host}:${sslPort} in ${mode} mode.`));
+    server.listen(sslPort, () => console.log(`[HTTPS] serving at ${host}:${sslPort} in ${mode} mode.`));
 }
 else {
     server.listen({ host, port }, () => console.log(`started server on ${host}:${port}`));

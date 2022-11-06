@@ -1,7 +1,13 @@
 import { ChangeEvent, FC, MouseEvent } from "react";
 import { useRecoilCallback, useRecoilState } from "recoil";
 import { useSocket } from "../../providers/ApiProvier";
-import { chromaKeyAtom, currentGameAtom } from "../../stores/Recoil";
+import {
+  chromaKeyAtom,
+  currentDisplayId,
+  currentGameAtom,
+  DEFAULT_CHROMA_KEY,
+  DEFAULT_GAME,
+} from "../../stores/Recoil";
 import classes from "./AdminPanel.module.less";
 import { PlayerForm } from "./components/PlayerForm";
 
@@ -13,15 +19,43 @@ export const AdminPanel: FC = () => {
   const changeChromaKey = (e: ChangeEvent<HTMLInputElement>) => {
     setChromaKey(e.target.value);
   };
-  const handleUpdate = useRecoilCallback(({ snapshot }) => async () => {
-    const promisedGame = await snapshot.getPromise(currentGameAtom);
-    socket?.emit("update", promisedGame);
-  });
+  const handleUpdate = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const promisedGame = await snapshot.getPromise(currentGameAtom);
+        const players = promisedGame.players.map((p) => ({
+          ...p,
+          coins: p.newCoins + p.coins,
+        }));
+        socket?.emit("update", { players });
+        set(currentGameAtom, {
+          players: players.map((p) => ({ ...p, newCoins: 0 })),
+        });
+      }
+  );
+  const handlePlayerReset = useRecoilCallback(
+    ({ set }) =>
+      async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        set(currentGameAtom, DEFAULT_GAME);
+        socket?.emit("update", DEFAULT_GAME);
+      }
+  );
+  const handleResetAll = useRecoilCallback(
+    ({ set }) =>
+      async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        set(currentGameAtom, DEFAULT_GAME);
+        set(currentDisplayId, 0);
+        set(chromaKeyAtom, DEFAULT_CHROMA_KEY);
+      }
+  );
 
   const sendChromaKey = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     socket?.emit("chroma", chromaKey);
-  }
+  };
   const setToOverview = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     socket?.emit("display", 0);
@@ -40,7 +74,12 @@ export const AdminPanel: FC = () => {
             <h1>Display Settings</h1>
             <div className={classes.formgroup}>
               <label htmlFor="chroma">Chroma Key</label>
-              <input id="chroma" type="text" value={chromaKey} onChange={changeChromaKey} />
+              <input
+                id="chroma"
+                type="text"
+                value={chromaKey}
+                onChange={changeChromaKey}
+              />
             </div>
             <button onClick={sendChromaKey}>Update</button>
           </form>
@@ -53,10 +92,24 @@ export const AdminPanel: FC = () => {
           </form>
         </div>
         <div className={classes.adminForms}>
-          <PlayerForm onUpdate={handleUpdate} playerId={1} />
-          <PlayerForm onUpdate={handleUpdate} playerId={2} />
-          <PlayerForm onUpdate={handleUpdate} playerId={3} />
-          <PlayerForm onUpdate={handleUpdate} playerId={4} />
+          <PlayerForm playerId={1} />
+          <PlayerForm playerId={2} />
+          <PlayerForm playerId={3} />
+          <PlayerForm playerId={4} />
+        </div>
+        <div className={classes.adminForms}>
+          <form>
+            <h1>Update Actions</h1>
+            <button onClick={handleUpdate}>Update Players</button>
+            <div>
+              <button onClick={handlePlayerReset} className={classes.reset}>
+                Reset Player Stats
+              </button>
+              <button onClick={handleResetAll} className={classes.reset}>
+                Reset All
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
