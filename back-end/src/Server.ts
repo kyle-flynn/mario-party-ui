@@ -92,8 +92,7 @@ io.on("connection", (socket) => {
 
 /* If in production, enable HTTPS */
 if (mode === "production") {
-  const appHttps = await createServer(app);
-  appHttps.listen(sslPort, () =>
+  server.listen(sslPort, () =>
     console.log(`[HTTPS] serving at ${host}:${sslPort} in ${mode} mode.`)
   );
 } else {
