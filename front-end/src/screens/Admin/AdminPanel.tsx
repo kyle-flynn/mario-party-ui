@@ -24,14 +24,33 @@ export const AdminPanel: FC = () => {
       async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const promisedGame = await snapshot.getPromise(currentGameAtom);
-        const players = promisedGame.players.map((p) => ({
+        const sortedPlayers = promisedGame.players
+          .map((p) => ({
+            ...p,
+            coins: p.newCoins + p.coins,
+          }))
+          .sort((a, b) => {
+            try {
+              if (a.stars !== b.stars) {
+                return b.stars - a.stars;
+              } else if (a.coins !== b.coins) {
+                return b.coins - a.coins;
+              } else {
+                return 0;
+              }
+            } catch (e) {
+              console.log(e);
+              return 0;
+            }
+          });
+        const players = sortedPlayers.map((p, i) => ({
           ...p,
-          coins: p.newCoins + p.coins,
+          newCoins: 0,
+          rank: i + 1,
         }));
+        console.log(players);
         socket?.emit("update", { players });
-        set(currentGameAtom, {
-          players: players.map((p) => ({ ...p, newCoins: 0 })),
-        });
+        set(currentGameAtom, { players });
       }
   );
   const handlePlayerReset = useRecoilCallback(
