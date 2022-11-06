@@ -68,6 +68,9 @@ export const AdminPanel: FC = () => {
         set(currentGameAtom, DEFAULT_GAME);
         set(currentDisplayId, 0);
         set(chromaKeyAtom, DEFAULT_CHROMA_KEY);
+        socket?.emit("update", DEFAULT_GAME);
+        socket?.emit("display", 0);
+        socket?.emit("chroma", DEFAULT_CHROMA_KEY);
       }
   );
 
