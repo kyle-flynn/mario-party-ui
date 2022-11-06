@@ -57,10 +57,7 @@ const DEFAULT_SOCKET_CONNECTED = false;
 
 export const isProductionSelector = selector<boolean>({
   key: "isProductionSelector",
-  get: () =>
-    import.meta.env.NODE_ENV
-      ? import.meta.env.NODE_ENV === "production"
-      : false,
+  get: () => import.meta.env.PROD,
 });
 export const chromaKeyAtom = atom<string>({
   key: "chromaKeyAtom",
