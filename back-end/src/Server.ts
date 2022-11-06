@@ -52,7 +52,9 @@ const io = new Server(server);
 app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use("/public", serveStatic(join(__dirname, "../dist")));
+app.use(serveStatic(join(__dirname, "../dist")));
+app.use("/admin", serveStatic(join(__dirname, "../dist")));
+
 const data: Map<string, unknown> = new Map();
 
 io.on("connection", (socket) => {
