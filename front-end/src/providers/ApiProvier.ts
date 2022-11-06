@@ -5,7 +5,7 @@ import { sockedConnectedAtom } from "../stores/Recoil";
 let socket: Socket | null = null;
 
 function createSocket(host: string, port: string): Socket {
-  return io(`ws://${host}:${port}`, { transports: ["websocket"] });
+  return io(`wss://${host}:${port}`, { transports: ["websocket"] });
 }
 
 export const useSocket = (): [

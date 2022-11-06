@@ -4,13 +4,13 @@ import express, {
   urlencoded,
   static as serveStatic,
 } from "express";
-import { createServer } from "http";
+import http from "http";
+import https from "https";
 import { Server } from "socket.io";
 import { join, dirname } from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import { readFile } from "fs/promises";
-import https from "https";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,8 +18,34 @@ export const __dirname = dirname(__filename);
 
 dotenv.config();
 
+const host = process.env.HOST_IP || "127.0.0.1";
+const port = process.env.HOST_PORT || "8080";
+const mode = process.env.NODE_ENV || "development";
+const sslPort = process.env.SSL_PORT || "443";
+const keyFile = process.env.SSL_KEY || "";
+const certFile = process.env.SSL_CERT || "";
+const caFile = process.env.SSL_CHAIN || "";
+
+async function createServer(app: Application): Promise<http.Server> {
+  const httpsEnabled =
+    mode === "production" &&
+    keyFile.length > 0 &&
+    certFile.length > 0 &&
+    caFile.length > 0;
+
+  if (httpsEnabled) {
+    // All SSL env variables must be absolute pathing
+    const key = await readFile(keyFile);
+    const cert = await readFile(certFile);
+    const ca = await readFile(caFile);
+    return https.createServer({ key, cert, ca }, app);
+  } else {
+    return http.createServer();
+  }
+}
+
 const app: Application = express();
-const server = createServer(app);
+const server = await createServer(app);
 const io = new Server(server);
 
 // Middleware
@@ -65,28 +91,14 @@ io.on("connection", (socket) => {
   });
 });
 
-const host = process.env.HOST_IP || "127.0.0.1";
-const port = process.env.HOST_PORT || "8080";
-const mode = process.env.NODE_ENV || "development";
-const sslPort = process.env.SSL_PORT || "443";
-
-server.listen({ host, port }, () =>
-  console.log(`started server on ${host}:${port}`)
-);
-
 /* If in production, enable HTTPS */
 if (mode === "production") {
-  const keyFile = process.env.SSL_KEY || "";
-  const certFile = process.env.SSL_CERT || "";
-  const caFile = process.env.SSL_CHAIN || "";
-
-  // All SSL env variables must be absolute pathing
-  const key = await readFile(keyFile);
-  const cert = await readFile(certFile);
-  const ca = await readFile(caFile);
-
-  const appHttps = https.createServer({ key, cert, ca }, app);
+  const appHttps = await createServer(app);
   appHttps.listen(sslPort, () =>
     console.log(`[HTTPS] serving at ${host}:${sslPort} in ${mode} mode.`)
+  );
+} else {
+  server.listen({ host, port }, () =>
+    console.log(`started server on ${host}:${port}`)
   );
 }
