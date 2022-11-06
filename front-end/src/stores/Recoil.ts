@@ -1,4 +1,10 @@
-import { atom, DefaultValue, selectorFamily } from "recoil";
+import {
+  atom,
+  DefaultValue,
+  selector,
+  selectorFamily,
+  useRecoilValue,
+} from "recoil";
 import { Game, Player } from "../AppTypes";
 
 const DEFAULT_CHROMA_KEY = "#e4e4e4";
@@ -13,7 +19,7 @@ const DEFAULT_GAME: Game = {
       name: "Player 1",
       rank: 1,
       stars: 0,
-      avatarUrl: '',
+      avatarUrl: "",
     },
     {
       coins: 0,
@@ -23,7 +29,7 @@ const DEFAULT_GAME: Game = {
       name: "Player 2",
       rank: 2,
       stars: 0,
-      avatarUrl: '',
+      avatarUrl: "",
     },
     {
       coins: 0,
@@ -33,7 +39,7 @@ const DEFAULT_GAME: Game = {
       name: "Player 3",
       rank: 3,
       stars: 0,
-      avatarUrl: '',
+      avatarUrl: "",
     },
     {
       coins: 0,
@@ -43,12 +49,19 @@ const DEFAULT_GAME: Game = {
       name: "Player 4",
       rank: 4,
       stars: 0,
-      avatarUrl: '',
+      avatarUrl: "",
     },
   ],
 };
 const DEFAULT_SOCKET_CONNECTED = false;
 
+export const isProductionSelector = selector<boolean>({
+  key: "isProductionSelector",
+  get: () =>
+    import.meta.env.NODE_ENV
+      ? import.meta.env.NODE_ENV === "production"
+      : false,
+});
 export const chromaKeyAtom = atom<string>({
   key: "chromaKeyAtom",
   default: DEFAULT_CHROMA_KEY,
@@ -66,13 +79,24 @@ export const currentGameAtom = atom<Game>({
   default: DEFAULT_GAME,
 });
 export const playerSelectorFam = selectorFamily<Player | undefined, number>({
-  key: 'playerSelectorFam',
-  get: (id: number) => ({ get }) => get(currentGameAtom).players.find((p) => p.id === id),
-  set: (id: number) => ({ get, set }, newValue) => {
-    const player = get(currentGameAtom).players.find((p) => p.id === id);
-    const players = get(currentGameAtom).players;
-    const index = players.findIndex((p) => p.id === id);
-    if (newValue instanceof DefaultValue || !newValue || !player) return;
-    set(currentGameAtom, { players: [...players.slice(0, index), newValue, ...players.slice(index + 1)] })
-  }
+  key: "playerSelectorFam",
+  get:
+    (id: number) =>
+    ({ get }) =>
+      get(currentGameAtom).players.find((p) => p.id === id),
+  set:
+    (id: number) =>
+    ({ get, set }, newValue) => {
+      const player = get(currentGameAtom).players.find((p) => p.id === id);
+      const players = get(currentGameAtom).players;
+      const index = players.findIndex((p) => p.id === id);
+      if (newValue instanceof DefaultValue || !newValue || !player) return;
+      set(currentGameAtom, {
+        players: [
+          ...players.slice(0, index),
+          newValue,
+          ...players.slice(index + 1),
+        ],
+      });
+    },
 });

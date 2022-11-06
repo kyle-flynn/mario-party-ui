@@ -1,11 +1,13 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import io, { Socket } from "socket.io-client";
-import { sockedConnectedAtom } from "../stores/Recoil";
+import { isProductionSelector, sockedConnectedAtom } from "../stores/Recoil";
 
 let socket: Socket | null = null;
 
-function createSocket(host: string, port: string): Socket {
-  return io(`wss://${host}:${port}`, { transports: ["websocket"] });
+function createSocket(host: string, port: string, ssl?: boolean): Socket {
+  return io(`ws${ssl ? "w" : ""}://${host}:${port}`, {
+    transports: ["websocket"],
+  });
 }
 
 export const useSocket = (): [
@@ -14,10 +16,11 @@ export const useSocket = (): [
   (host: string, port: string) => void
 ] => {
   const [connected, setConnected] = useRecoilState(sockedConnectedAtom);
+  const isProduction = useRecoilValue(isProductionSelector);
 
   const setupSocket = (host: string, port: string) => {
     if (socket) return;
-    socket = createSocket(host, port);
+    socket = createSocket(host, port, isProduction);
     initEvents();
   };
 
