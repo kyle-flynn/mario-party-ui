@@ -1,6 +1,12 @@
-import express, { Application, json, urlencoded } from "express";
+import express, {
+  Application,
+  json,
+  urlencoded,
+  static as serveStatic,
+} from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { join } from "path";
 import cors from "cors";
 
 const app: Application = express();
@@ -11,6 +17,8 @@ const io = new Server(server);
 app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
+
+app.use(serveStatic(join(__dirname, "../public")));
 
 io.on("connection", (socket) => {
   console.log("user connected");
