@@ -52,7 +52,6 @@ const io = new Server(server);
 app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-
 app.use("/public", serveStatic(join(__dirname, "../dist")));
 const data: Map<string, unknown> = new Map();
 
