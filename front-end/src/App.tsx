@@ -13,7 +13,7 @@ const App: FC = () => {
     <>
       <UpdateListener
         host={window.location.hostname}
-        port={isProduction ? "80" : "8080"}
+        port={isProduction ? "443" : "8080"}
       />
       <Routes>
         {AppRoutes.map((route) => (
