@@ -6,11 +6,15 @@ import express, {
 } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { join } from "path";
+import { join, dirname } from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import { readFile } from "fs/promises";
 import https from "https";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+export const __dirname = dirname(__filename);
 
 dotenv.config();
 
