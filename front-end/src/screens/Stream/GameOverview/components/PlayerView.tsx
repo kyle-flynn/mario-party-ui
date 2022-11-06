@@ -1,9 +1,9 @@
 import { FC } from "react";
 import classes from "./PlayerView.module.less";
-import MARIO_AVATAR from "../../../../assets/mario-avatar.png";
 import COIN_ICON from "../../../../assets/coin-icon.png";
 import STAR_ICON from "../../../../assets/star-icon.png";
 import { Player } from "../../../../AppTypes";
+import { Rank } from "../../../../components/Rank";
 
 interface Props {
   player: Player;
@@ -11,29 +11,15 @@ interface Props {
 }
 
 const PlayerView: FC<Props> = ({ player, avatarClass }) => {
-  const getRankText = () => {
-    switch (player.rank) {
-      case 1:
-        return "1st";
-      case 2:
-        return "2nd";
-      case 3:
-        return "3rd";
-      case 4:
-        return "4th";
-      default:
-        return "";
-    }
-  };
 
   return (
     <div className={classes.player}>
       <div className={classes.playerInfo}>
         <div className={classes.playerAvatar}>
           <div className={`${avatarClass} ${classes.playerAvatarContainer}`}>
-            {/* <img src={MARIO_AVATAR} /> */}
+            <img src={player.avatarUrl} />
           </div>
-          <div className={classes.playerRank}>{getRankText()}</div>
+          <div className={classes.playerRank}><Rank rank={player.rank} /></div>
         </div>
         <div className={classes.playerStats}>
           <div className={classes.statRow}>

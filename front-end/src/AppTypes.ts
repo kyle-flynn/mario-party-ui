@@ -8,6 +8,8 @@ export interface Player {
   stars: number;
   rank: number;
   coins: number;
+  newCoins: number;
+  avatarUrl?: string;
   items: Item[];
 }
 

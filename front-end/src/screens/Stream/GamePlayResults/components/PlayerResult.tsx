@@ -1,8 +1,8 @@
 import { FC } from "react";
 import classes from "./PlayerResult.module.less";
 import { Player } from "../../../../AppTypes";
+import { Rank } from "../../../../components/Rank";
 
-import MARIO_AVATAR from "../../../../assets/mario-avatar.png";
 import COIN_ICON from "../../../../assets/coin-icon.png";
 import STAR_ICON from "../../../../assets/star-icon.png";
 import BACKGROUND from "../../../../assets/player-backdrop.png";
@@ -17,25 +17,19 @@ const PlayerResult: FC<Props> = ({ player }) => {
       style={{ backgroundImage: `url(${BACKGROUND})` }}
       className={classes.playerContainer}
     >
-      <div className={classes.playerResult}>
-        <div className={classes.playerRank}>{player.rank}</div>
-        <div className={classes.playerAvatar}>
-          <img src={MARIO_AVATAR} />
-        </div>
-        <div className={classes.playerStat}>
-          <div className="center">
-            <img src={STAR_ICON} />
-          </div>
-          <span className={classes.playerStars}>{player.stars}</span>
-        </div>
-        <div className={classes.playerStat}>
-          <div className="center">
-            <img src={COIN_ICON} />
-          </div>
-          <span>{player.coins}</span>
-        </div>
+      <span className={`center ${classes.playerRank}`}><Rank rank={player.rank} /></span>
+      <div className={classes.playerImage}>
+        <img src={player.avatarUrl} />
       </div>
-      {/* <div className={classes.playerName}>{player.name}</div> */}
+      <div className={`center ${classes.playerStat}`}>
+        <img src={STAR_ICON} />
+      </div>
+      <span className={`center ${classes.playerStars}`}>{player.stars}</span>
+      <span className={`center ${classes.playerNewCoins}`}>{player.newCoins >= 0 && '+'}{player.newCoins}</span>
+      <div className={`center ${classes.playerStat}`}>
+        <img src={COIN_ICON} />
+      </div>
+      <span className={`center ${classes.playerCoins}`}>{player.coins}</span>
     </div>
   );
 };
