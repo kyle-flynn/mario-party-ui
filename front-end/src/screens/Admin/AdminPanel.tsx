@@ -45,12 +45,12 @@ export const AdminPanel: FC = () => {
           });
         const players = sortedPlayers.map((p, i) => ({
           ...p,
-          newCoins: 0,
           rank: i + 1,
         }));
-        console.log(players);
         socket?.emit("update", { players });
-        set(currentGameAtom, { players });
+        set(currentGameAtom, {
+          players: players.map((p) => ({ ...p, newCoins: 0 })),
+        });
       }
   );
   const handlePlayerReset = useRecoilCallback(
