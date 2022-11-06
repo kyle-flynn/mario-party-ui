@@ -5,7 +5,8 @@ import { isProductionSelector, sockedConnectedAtom } from "../stores/Recoil";
 let socket: Socket | null = null;
 
 function createSocket(host: string, port: string, ssl?: boolean): Socket {
-  return io(`ws${ssl ? "w" : ""}://${host}:${port}`, {
+  const protocol = ssl ? "ws" : "wss";
+  return io(`${protocol}://${host}:${port}`, {
     transports: ["websocket"],
   });
 }
