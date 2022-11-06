@@ -51,10 +51,7 @@ const DEFAULT_SOCKET_CONNECTED = false;
 
 export const isProductionSelector = selector<boolean>({
   key: "isProductionSelector",
-  get: () => {
-    console.log(import.meta.env.PROD);
-    return false;
-  },
+  get: () => import.meta.env.PROD,
 });
 export const chromaKeyAtom = atom<string>({
   key: "chromaKeyAtom",
