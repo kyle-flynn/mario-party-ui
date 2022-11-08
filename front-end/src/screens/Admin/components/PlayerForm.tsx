@@ -5,6 +5,8 @@ import classes from "../AdminPanel.module.less";
 
 import STARS_ICON from "../../../assets/star-icon.png";
 import COIN_ICON from "../../../assets/coin-icon.png";
+import { ItemDropdown } from "./ItemDropdown";
+import { Item } from "../../../AppTypes";
 
 interface Props {
   playerId: number;
@@ -26,6 +28,18 @@ export const PlayerForm: FC<Props> = ({ playerId }) => {
     const newPlayer = { ...player, newCoins };
     setPlayer({ ...newPlayer });
   };
+  const handleAddItem = (item: Item) => {
+    const items = [...player.items, item];
+    setPlayer({ ...player, items });
+  };
+  const handleRemoveItem = (index: number) => {
+    const items = [
+      ...player.items.slice(0, index),
+      ...player.items.slice(index + 1),
+    ];
+    setPlayer({ ...player, items });
+  };
+
   return (
     <form>
       <h1>Player {player.id} Stats</h1>
@@ -89,6 +103,25 @@ export const PlayerForm: FC<Props> = ({ playerId }) => {
           onChange={handleChange}
         />
       </div>
+      <div className={classes.formgroup}>
+        <label htmlFor="playerAddItem">Items</label>
+        <ItemDropdown onSelect={handleAddItem} />
+      </div>
+      {player.items.map((i, index) => {
+        const select = (e: MouseEvent<HTMLButtonElement>) => {
+          e.preventDefault();
+          handleRemoveItem(index);
+          console.log("here", index);
+        };
+        return (
+          <div className={classes.formgroup}>
+            <label>{i.name}</label>
+            <button className={classes.reset} onClick={select}>
+              Remove
+            </button>
+          </div>
+        );
+      })}
     </form>
   );
 };

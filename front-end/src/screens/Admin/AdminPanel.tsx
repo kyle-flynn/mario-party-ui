@@ -1,15 +1,14 @@
 import { ChangeEvent, FC, MouseEvent } from "react";
 import { useRecoilCallback, useRecoilState } from "recoil";
 import { useSocket } from "../../providers/ApiProvier";
+import { DEFAULT_GAME, DEFAULT_CHROMA_KEY } from "../../stores/Constants";
 import {
   chromaKeyAtom,
   currentDisplayId,
   currentGameAtom,
-  DEFAULT_CHROMA_KEY,
-  DEFAULT_GAME,
 } from "../../stores/Recoil";
-import classes from "./AdminPanel.module.less";
 import { PlayerForm } from "./components/PlayerForm";
+import classes from "./AdminPanel.module.less";
 
 export const AdminPanel: FC = () => {
   const [chromaKey, setChromaKey] = useRecoilState(chromaKeyAtom);

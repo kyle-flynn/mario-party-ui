@@ -10,8 +10,13 @@ export interface AppRoute {
 
 export const AppRoutes: AppRoute[] = [
   {
-    name: "Stream Display",
+    name: "Stream Display 1",
     path: "/",
+    component: <StreamDisplay />,
+  },
+  {
+    name: "Stream Display 2",
+    path: "/display/:id",
     component: <StreamDisplay />,
   },
   {

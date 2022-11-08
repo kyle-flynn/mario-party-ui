@@ -44,6 +44,13 @@ const PlayerView: FC<Props> = ({ playerId, avatarClass }) => {
               <span>{player.coins}</span>
             </div>
           </div>
+          <div className={classes.playerItems}>
+            {player.items.map((i) => (
+              <div className="center">
+                <img src={i.avatarUrl} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

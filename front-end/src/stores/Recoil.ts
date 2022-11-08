@@ -1,53 +1,11 @@
 import { atom, DefaultValue, selector, selectorFamily } from "recoil";
 import { Game, Player } from "../AppTypes";
-
-export const DEFAULT_CHROMA_KEY = "#e4e4e4";
-const DEFUALT_DISPLAY_ID = 0;
-export const DEFAULT_GAME: Game = {
-  players: [
-    {
-      coins: 0,
-      newCoins: 0,
-      id: 1,
-      items: [],
-      name: "Player 1",
-      rank: 1,
-      stars: 0,
-      avatarUrl: "",
-    },
-    {
-      coins: 0,
-      newCoins: 0,
-      id: 2,
-      items: [],
-      name: "Player 2",
-      rank: 2,
-      stars: 0,
-      avatarUrl: "",
-    },
-    {
-      coins: 0,
-      newCoins: 0,
-      id: 3,
-      items: [],
-      name: "Player 3",
-      rank: 3,
-      stars: 0,
-      avatarUrl: "",
-    },
-    {
-      coins: 0,
-      newCoins: 0,
-      id: 4,
-      items: [],
-      name: "Player 4",
-      rank: 4,
-      stars: 0,
-      avatarUrl: "",
-    },
-  ],
-};
-const DEFAULT_SOCKET_CONNECTED = false;
+import {
+  DEFAULT_CHROMA_KEY,
+  DEFUALT_DISPLAY_ID,
+  DEFAULT_SOCKET_CONNECTED,
+  DEFAULT_GAME,
+} from "./Constants";
 
 export const isProductionSelector = selector<boolean>({
   key: "isProductionSelector",
