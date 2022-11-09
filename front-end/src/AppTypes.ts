@@ -1,4 +1,11 @@
-import TEST_ITEM from "./assets/test_item.png";
+import CURSED from "./assets/items/Cursed.png";
+import CUSTOM from "./assets/items/Custom Dice.png";
+import DASH from "./assets/items/Dash.png";
+import DOUBLE from "./assets/items/Double Dice.png";
+import STAR from "./assets/items/Star.png";
+import TRIPLE from "./assets/items/Triple Dice.png";
+import WARP from "./assets/items/Warp.png";
+import WHISTLE from "./assets/items/Whistle.png";
 
 export interface Game {
   players: Player[];
@@ -21,15 +28,54 @@ export interface Item {
   avatarUrl: string;
 }
 
-export const TestItem: Item = {
-  id: -1,
-  name: "Test Item",
-  avatarUrl: TEST_ITEM,
+export const CursedItem: Item = {
+  id: 0,
+  name: "Cursed Item",
+  avatarUrl: CURSED,
 };
-export const TestItem2: Item = {
-  id: -1,
-  name: "Test Item 2",
-  avatarUrl: TEST_ITEM,
+export const CustomDice: Item = {
+  id: 1,
+  name: "Custom Dice",
+  avatarUrl: CUSTOM,
+};
+export const DashItem: Item = {
+  id: 1,
+  name: "Dash Item",
+  avatarUrl: DASH,
+};
+export const DoubleDice: Item = {
+  id: 1,
+  name: "Double Dice",
+  avatarUrl: DOUBLE,
+};
+export const StarItem: Item = {
+  id: 1,
+  name: "Star Item",
+  avatarUrl: STAR,
+};
+export const TripleDice: Item = {
+  id: 1,
+  name: "Triple Dice",
+  avatarUrl: TRIPLE,
+};
+export const WarpItem: Item = {
+  id: 1,
+  name: "Warp Item",
+  avatarUrl: WARP,
+};
+export const WhistleItem: Item = {
+  id: 1,
+  name: "Whistle Item",
+  avatarUrl: WHISTLE,
 };
 
-export const Items: Item[] = [TestItem, TestItem2];
+export const Items: Item[] = [
+  CursedItem,
+  DashItem,
+  StarItem,
+  WarpItem,
+  WhistleItem,
+  CustomDice,
+  DoubleDice,
+  TripleDice,
+];

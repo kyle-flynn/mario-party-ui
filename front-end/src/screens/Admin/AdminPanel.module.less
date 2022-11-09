@@ -32,7 +32,7 @@
         position: absolute;
         font-size: 16px;
         top: -24px;
-        z-index: 999;
+        z-index: 99;
         background-color: @background-color;
       }
     }
@@ -92,6 +92,9 @@
         margin-top: -4px;
         margin-left: 4px;
         text-align: center;
+        z-index: 999;
+        max-height: calc(5 * 31px);
+        overflow-y: scroll;
 
         div {
           padding: 8px 2px;
@@ -102,6 +105,19 @@
         div:hover {
           background-color: #186dec;
         }
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
       }
     }
 

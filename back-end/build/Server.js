@@ -5,7 +5,7 @@ import { Server } from "socket.io";
 import { join, dirname } from "path";
 import cors from "cors";
 import dotenv from "dotenv";
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
@@ -17,6 +17,7 @@ const sslPort = process.env.SSL_PORT || "443";
 const keyFile = process.env.SSL_KEY || "";
 const certFile = process.env.SSL_CERT || "";
 const caFile = process.env.SSL_CHAIN || "";
+const data = new Map();
 async function createServer(app) {
     const httpsEnabled = mode === "production" &&
         keyFile.length > 0 &&
@@ -33,16 +34,44 @@ async function createServer(app) {
         return http.createServer();
     }
 }
+async function writeStorage(key, value) {
+    try {
+        data.set(key, value);
+        const fileData = await readFile("../../marioparty.json");
+        const jsonData = JSON.parse(fileData.toString());
+        jsonData[key] = value;
+        await writeFile("../../marioparty.json", JSON.stringify(jsonData));
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+async function readStorage() {
+    try {
+        const fileData = await readFile("../../marioparty.json");
+        const jsonData = JSON.parse(fileData.toString());
+        for (const key in jsonData) {
+            data.set(key, jsonData[key]);
+        }
+        console.log("successfully read data");
+    }
+    catch (e) {
+        console.log("problem reading storage");
+        console.log(e);
+    }
+}
 const app = express();
 const server = await createServer(app);
 const io = new Server(server);
+// Read storage
+await readStorage();
 // Middleware
 app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(serveStatic(join(__dirname, "../dist")));
+app.use("/display", serveStatic(join(__dirname, "../dist")));
 app.use("/admin", serveStatic(join(__dirname, "../dist")));
-const data = new Map();
 io.on("connection", (socket) => {
     console.log("user connected");
     if (data.size > 0) {
@@ -54,15 +83,15 @@ io.on("connection", (socket) => {
     }
     socket.on("update", (update) => {
         socket.broadcast.emit("update", update);
-        data.set("update", update);
+        writeStorage("update", update);
     });
     socket.on("display", (display) => {
         socket.broadcast.emit("display", display);
-        data.set("display", display);
+        writeStorage("display", display);
     });
     socket.on("chroma", (chroma) => {
         socket.broadcast.emit("chroma", chroma);
-        data.set("chroma", chroma);
+        writeStorage("chroma", chroma);
     });
     socket.on("disconnect", (reason) => {
         console.log("user disconnected: " + reason);
