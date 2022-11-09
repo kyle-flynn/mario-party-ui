@@ -19,7 +19,10 @@ const PlayerResult: FC<Props> = ({ playerId }) => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${BACKGROUND})` }}
+      style={{
+        backgroundImage: `url(${BACKGROUND})`,
+        top: `${player.rank * 19}vh`,
+      }}
       className={classes.playerContainer}
     >
       <span className={`center ${classes.playerRank}`}>

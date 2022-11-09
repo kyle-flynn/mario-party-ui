@@ -12,8 +12,13 @@
   background-position: center;
   background-repeat: no-repeat;
   padding: 0 6vw;
+  position: absolute;
 
-  // Hopefully this is all we'll need
+  transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -webkit-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+
   .playerImage {
     border-radius: 50%;
     border: 4px solid @text-color;
@@ -42,7 +47,7 @@
     margin-right: 4vw;
     margin-bottom: 1vh;
   }
-  
+
   .playerNewCoins {
     width: 4vw;
     font-size: 2.5vw;
@@ -52,5 +57,4 @@
     width: 4vw;
     margin-bottom: 1vh;
   }
-
- }
+}
