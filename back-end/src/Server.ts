@@ -84,7 +84,7 @@ app.use(cors({ credentials: true }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(serveStatic(join(__dirname, "../dist")));
-app.use("/display", serveStatic(join(__dirname, "../dist")));
+app.use("/display/:id", serveStatic(join(__dirname, "../dist")));
 app.use("/admin", serveStatic(join(__dirname, "../dist")));
 
 io.on("connection", (socket) => {
