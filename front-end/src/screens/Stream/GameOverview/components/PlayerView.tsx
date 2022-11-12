@@ -16,6 +16,7 @@ const PlayerView: FC<Props> = ({ playerId, avatarClass }) => {
   const player = useRecoilValue(playerSelectorFam(playerId));
   const [updated, setUpdated] = useState(false);
   const [socket, connected] = useSocket();
+  let timerId: number | null = null;
 
   useEffect(() => {
     if (connected) {
@@ -30,8 +31,11 @@ const PlayerView: FC<Props> = ({ playerId, avatarClass }) => {
 
   const handleUpdate = () => {
     setUpdated(true);
-    console.log('update');
-    setTimeout(() => {
+    if (timerId) {
+      clearTimeout(timerId);
+      timerId = null;
+    }
+    timerId = setTimeout(() => {
       setUpdated(false);
     }, 10000);
   };
@@ -73,10 +77,14 @@ const PlayerView: FC<Props> = ({ playerId, avatarClass }) => {
           </div>
           <div className={`${classes.playerAdds} ${updated && classes.fadeOut}`}>
               <div className="center">
-                <span className={player.newStars === 0 ? classes.opaque : ''}>{player.newStars >= 0 && '+'}{player.newStars}</span>
+                <span className={player.newStars === 0 ? classes.opaque : ''}>
+                  {player.newStars >= 0 && '+'}{player.newStars}
+                </span>
               </div>
               <div className="center">
-                <span className={player.newCoins === 0 ? classes.opaque : ''}>{player.newCoins >= 0 && '+'}{player.newCoins}</span>
+                <span className={player.newCoins === 0 ? classes.opaque : ''}>
+                  {player.newCoins >= 0 && '+'}{player.newCoins}
+                </span>
               </div>
           </div>
         </div>

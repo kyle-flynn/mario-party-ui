@@ -83,6 +83,7 @@ export const PlayerForm: FC<Props> = ({ playerId }) => {
           <span>Coins To Add</span>
         </label>
         <input
+          name="newCoins"
           id="newCoins"
           type="number"
           value={player.newCoins}
