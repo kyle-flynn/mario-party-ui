@@ -12,6 +12,7 @@ export const DEFAULT_GAME: Game = {
       name: "Player 1",
       rank: 1,
       stars: 0,
+      newStars: 0,
       avatarUrl: "",
     },
     {
@@ -22,6 +23,7 @@ export const DEFAULT_GAME: Game = {
       name: "Player 2",
       rank: 2,
       stars: 0,
+      newStars: 0,
       avatarUrl: "",
     },
     {
@@ -32,6 +34,7 @@ export const DEFAULT_GAME: Game = {
       name: "Player 3",
       rank: 3,
       stars: 0,
+      newStars: 0,
       avatarUrl: "",
     },
     {
@@ -42,6 +45,7 @@ export const DEFAULT_GAME: Game = {
       name: "Player 4",
       rank: 4,
       stars: 0,
+      newStars: 0,
       avatarUrl: "",
     },
   ],

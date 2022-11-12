@@ -5,7 +5,7 @@ import { DEFAULT_GAME, DEFAULT_CHROMA_KEY } from "../../stores/Constants";
 import {
   chromaKeyAtom,
   currentDisplayId,
-  currentGameAtom,
+  currentGameAtom
 } from "../../stores/Recoil";
 import { PlayerForm } from "./components/PlayerForm";
 import classes from "./AdminPanel.module.less";
@@ -19,7 +19,7 @@ export const AdminPanel: FC = () => {
     setChromaKey(e.target.value);
   };
   const handleUpdate = useRecoilCallback(
-    ({ snapshot, set }) =>
+    ({ snapshot, set, reset }) =>
       async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const promisedGame = await snapshot.getPromise(currentGameAtom);
@@ -27,6 +27,7 @@ export const AdminPanel: FC = () => {
           .map((p) => ({
             ...p,
             coins: p.newCoins + p.coins,
+            stars: p.newStars + p.stars
           }))
           .sort((a, b) => {
             try {
@@ -48,7 +49,7 @@ export const AdminPanel: FC = () => {
         }));
         socket?.emit("update", { players });
         set(currentGameAtom, {
-          players: players.map((p) => ({ ...p, newCoins: 0 })),
+          players: players.map((p) => ({ ...p, newCoins: 0, newStars: 0 })),
         });
       }
   );

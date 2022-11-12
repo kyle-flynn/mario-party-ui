@@ -1,0 +1,23 @@
+@text-color: #ffffff;
+@margin: 32px;
+.screenContainer {
+  margin: @margin;
+  width: calc(100vw - @margin * 2);
+  height: calc(100vh - @margin * 2);
+  color: @text-color;
+
+  .screenHeader {
+    font-size: 5vw;
+    text-align: center;
+    margin-bottom: 5vh;
+    color: @text-color;
+  }
+
+  .screenContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 6vh;
+  }
+}

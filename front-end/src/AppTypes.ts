@@ -15,6 +15,7 @@ export interface Player {
   id: number;
   name: string;
   stars: number;
+  newStars: number;
   rank: number;
   coins: number;
   newCoins: number;

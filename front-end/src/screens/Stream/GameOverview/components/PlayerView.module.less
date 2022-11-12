@@ -47,6 +47,8 @@
   .playerStats {
     width: 7.5vw;
     font-size: 3vw;
+    position: relative;
+
     .statRow {
       display: flex;
       justify-content: space-between;
@@ -83,5 +85,33 @@
         }
       }
     }
+
+    .playerAdds {
+      font-size: 2vw;
+      position: absolute;
+      top: 1vh;
+      left: 9vw;
+      height: 15vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      opacity: 0;
+    }
   }
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 10s;
+}
+
+.opaque {
+  opacity: 0;
+}
+
+@keyframes fadeOut {
+   0% {opacity: 0;}
+   5% {opacity: 1;}
+   90% {opacity: 1;}
+   100% {opacity: 0;} 
 }

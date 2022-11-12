@@ -1,4 +1,4 @@
-import { atom, DefaultValue, selector, selectorFamily } from "recoil";
+import { atom, atomFamily, DefaultValue, selector, selectorFamily } from "recoil";
 import { Game, Player } from "../AppTypes";
 import {
   DEFAULT_CHROMA_KEY,

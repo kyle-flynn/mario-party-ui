@@ -25,7 +25,7 @@ export const ItemDropdown: FC<Props> = ({ onSelect }) => {
       <div className={open ? classes.itemListOpen : classes.itemListClosed}>
         {Items.map((i) => {
           const select = () => handleSelect(i);
-          return <div onClick={select}>{i.name}</div>;
+          return <div onClick={select} key={`item-${i.name}`}>{i.name}</div>;
         })}
       </div>
     </div>

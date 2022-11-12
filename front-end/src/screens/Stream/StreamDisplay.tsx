@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { chromaKeyAtom, currentDisplayId } from "../../stores/Recoil";
 import { GameOverview } from "./GameOverview";
+import { GamePlayRankings } from "./GamePlayRankings";
 import { GamePlayResults } from "./GamePlayResults";
 import classes from "./StreamDisplay.module.less";
 
@@ -26,6 +27,8 @@ function getDisplay(id: number): ReactNode {
       return <GameOverview />;
     case 1:
       return <GamePlayResults />;
+    case 2:
+      return <GamePlayRankings />;
     default:
       return <GameOverview />;
   }
